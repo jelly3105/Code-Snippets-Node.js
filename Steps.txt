@@ -1,5 +1,1 @@
-Following are the steps to create main directory:
-1. Create a new folder.
-2. Open it in code editior.
-3. Run: npm init => creates package.json.
-4. Run: npx gitignore node => to create .gitignore file
+1. Run: npx gitignore node => to create .gitignore file 

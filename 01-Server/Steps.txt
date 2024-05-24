@@ -1,0 +1,13 @@
+1. Create a new folder.
+2. Open it in code editior.
+3. Run: npm init -y => creates package.json.
+4. npm install express
+5. npm install typescript
+6. npx tsc --init => to add tsconfig file
+7. npm i nodemon ts-node
+8. npm install express and npm install @types/express
+9. npx ts-node index.ts to run the project
+10. Update outDir in tsconfig file to "./dist"
+11. Update main in package file to "dist/index.js".
+12. Update scripts in package.json
+13. npm run dev to run the project.
