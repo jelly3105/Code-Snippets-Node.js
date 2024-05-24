@@ -1,0 +1,5 @@
+Following are the steps to create express/node.js server:
+1. Create a new folder.
+2. Open it in code editior.
+3. Run: npm install express.
+4. Run: node index.js. 
