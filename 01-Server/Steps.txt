@@ -1,3 +1,4 @@
+Follow below steps if you're creating the code from scratch or else clone the repo and run npm install.
 1. Create a new folder.
 2. Open it in code editior.
 3. Run: npm init -y => creates package.json.
