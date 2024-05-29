@@ -1,0 +1,3 @@
+1. Create a http server (you can refer 01-Server/Steps.txt)
+2. npm install zod
+3. 

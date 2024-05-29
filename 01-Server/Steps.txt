@@ -10,5 +10,10 @@ Follow below steps if you're creating the code from scratch or else clone the re
 9. npx ts-node index.ts to run the project
 10. Update outDir in tsconfig file to "./dist"
 11. Update main in package file to "dist/index.js".
-12. Update scripts in package.json
+12. Update scripts in package.json to 
+"scripts": {
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon index.ts"
+  }
 13. npm run dev to run the project.
