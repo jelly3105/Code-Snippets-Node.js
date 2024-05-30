@@ -6,7 +6,7 @@ Follow below steps if you're creating the code from scratch or else clone the re
 5. npm install typescript
 6. npx tsc --init => to add tsconfig file
 7. npm i nodemon ts-node
-8. npm install express and npm install @types/express
+8. npm install @types/express
 9. npx ts-node index.ts to run the project
 10. Update outDir in tsconfig file to "./dist"
 11. Update main in package file to "dist/index.js".
