@@ -1,0 +1,12 @@
+1. create basic http server (01-server/steps.txt)
+2. Follow steps in 03-authentication
+3. npm install mongoose
+4. npm install dotenv
+
+****************** Sign UP steps ********************
+1. Accept user input
+2. Validate user input
+3. Check if email or username exists, if yes then return.
+4. Hash the password
+5. Store in db
+6. Create JWT and send it back to user

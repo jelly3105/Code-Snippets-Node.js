@@ -2,18 +2,24 @@ Follow below steps if you're creating the code from scratch or else clone the re
 1. Create a new folder.
 2. Open it in code editior.
 3. Run: npm init -y => creates package.json.
-4. npm install express
-5. npm install typescript
-6. npx tsc --init => to add tsconfig file
-7. npm i nodemon ts-node
-8. npm install @types/express
-9. npx ts-node index.ts to run the project
-10. Update outDir in tsconfig file to "./dist"
-11. Update main in package file to "dist/index.js".
-12. Update scripts in package.json to 
+4. npm install express 
+5. npm install nodemon @types/node @types/express --save-dev
+6. Update scripts in package.json to
+    "scripts": {
+        "dev": "nodemon index.ts"
+    }
+7. npm run dev to run the project.
+
+=========Maybe needed
+1. npm install typescript
+2. npx tsc --init => to add tsconfig file
+3. npm i ts-node
+4. npx ts-node index.ts to run the project
+5. Update outDir in tsconfig file to "./dist"
+6. Update main in package file to "dist/index.js".
+7. Update scripts in package.json to 
 "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
     "dev": "nodemon index.ts"
   }
-13. npm run dev to run the project.
