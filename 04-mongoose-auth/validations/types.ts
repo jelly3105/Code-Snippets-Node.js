@@ -18,4 +18,13 @@ export const signUpSchema = zod.object({
     dateOfBirth: zod.string().refine((value) => {
         return validateDOB(value)
     })
-});
+}).strict();
+
+export const logInSchema = zod.object({
+  email: zod.string().email(),
+  password: zod.string().min(8).max(16).refine((value) => {
+      return validatePassword(value);
+    }, {
+      message: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
+    })
+}).strict();

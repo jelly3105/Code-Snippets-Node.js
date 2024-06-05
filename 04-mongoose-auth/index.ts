@@ -1,9 +1,11 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+
 import { connectToDB } from "./database/connectToDB";
 import { findUserByEmail, saveUser } from "./database/user";
-import { signUpSchema } from "./validations/types";
+import { logInSchema, signUpSchema } from "./validations/types";
 import { UserType } from "./types";
 import { generateHashedPassword } from "./auth/generateHashedPassword";
 
@@ -51,6 +53,38 @@ app.post("/signup", async (req,res) => {
     return res.json({
       "token": token,
       user: savedUser._id
+    })
+  }catch(e) {
+    return res.status(500).json({"msg" : "Server is down, please try again!"})
+  }
+})
+
+app.post("/login", async (req, res) => {
+  try {
+    // 1. Validate input
+    const validationResponse = logInSchema.safeParse(req.body);
+    if(!validationResponse.success) {
+      return res.status(400).json({"msg" : "Validation failed"})
+    }
+
+    const {email, password} = req.body;
+    // 2. Check if email exists
+    const user = await findUserByEmail(email);
+    if(!user) {
+      return res.status(400).json({"msg" : "User doesn't exist, please sign up!"})
+    }
+
+    // 3. Verify password
+    const match = await bcrypt.compare(password, user.password);
+    if(!match){
+      return res.status(400).json({"msg" : "Password is incorrect!"})
+    }
+
+    // 4. Create jwt 
+    const token = jwt.sign({ email: email }, jwtPassword);
+    return res.json({
+      "token": token,
+      user: user._id
     })
   }catch(e) {
     return res.status(500).json({"msg" : "Server is down, please try again!"})
