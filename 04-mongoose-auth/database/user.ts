@@ -5,8 +5,9 @@ export const findUserByEmail = async (email:string) => {
     let user;
     try{
         user = await User.findOne({email});
-    }catch(e) {
+    }catch(e:any) {
         console.log(`Error while finding user by email : ${e}`)
+        throw new Error(e);
     }
     return user;
 }
@@ -16,8 +17,9 @@ export const saveUser = async (userData:UserType) => {
     try {
         user = new User(userData);
         await user.save();
-    }catch(e) {
+    }catch(e:any) {
         console.log(`Error while saving user : ${e}`)
+        throw new Error(e);
     }
     return user;
 }
