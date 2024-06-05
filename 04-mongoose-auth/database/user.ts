@@ -12,10 +12,12 @@ export const findUserByEmail = async (email:string) => {
 }
 
 export const saveUser = async (userData:UserType) => {
+    let user;
     try {
-        const user = new User(userData);
+        user = new User(userData);
         await user.save();
     }catch(e) {
         console.log(`Error while saving user : ${e}`)
     }
+    return user;
 }

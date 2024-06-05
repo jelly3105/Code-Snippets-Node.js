@@ -1,9 +1,14 @@
 import express from "express";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import { connectToDB } from "./database/connectToDB";
 import { findUserByEmail, saveUser } from "./database/user";
 import { signUpSchema } from "./validations/types";
 import { UserType } from "./types";
 import { generateHashedPassword } from "./auth/generateHashedPassword";
+
+dotenv.config();
+const jwtPassword = process.env.jwtPassword as string;
 
 const app = express();
 app.use(express.json());
@@ -35,10 +40,17 @@ app.post("/signup", async (req,res) => {
   userData.password = await generateHashedPassword(userData.password);
 
   // 5. Store in db
-  await saveUser(userData);
+  const savedUser = await saveUser(userData);
+  if(!savedUser) {
+    return res.status(500).json({"msg" : "Server is down, please try again!"})
+  }
   
   // 6. Create JWT and send it back to user
-  return res.json({"msg": "User saved successfully"})
+  const token = jwt.sign({ email: userData.email }, jwtPassword);
+  return res.json({
+    "token": token,
+    user: savedUser
+  })
 })
 app.listen(3000, async () => {
   await connectToDB();
