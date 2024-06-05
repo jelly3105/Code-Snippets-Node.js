@@ -1,6 +1,6 @@
 import express from "express";
 import { connectToDB } from "./database/connectToDB";
-import { signUpSchema } from "./types";
+import { signUpSchema } from "./validations/types";
 
 const app = express();
 app.use(express.json());
