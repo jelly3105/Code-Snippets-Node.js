@@ -1,7 +1,9 @@
 import express from "express";
 import { connectToDB } from "./database/connectToDB";
-import { findUserByEmail } from "./database/user";
+import { findUserByEmail, saveUser } from "./database/user";
 import { signUpSchema } from "./validations/types";
+import { UserType } from "./types";
+import { generateHashedPassword } from "./auth/generateHashedPassword";
 
 const app = express();
 app.use(express.json());
@@ -14,15 +16,27 @@ app.post("/signup", async (req,res) => {
     return res.status(400).json({"msg" : "Validation failed"})
   }
 
-  const {email} = req.body;
+  const {email, password, name, mobileNumber, dateOfBirth} = req.body;
+  const userData: UserType = {
+    email: email,
+    password: password,
+    name: name,
+    mobileNumber: mobileNumber,
+    dateOfBirth: dateOfBirth
+  };
 
   // 3. Check if email or username exists, if yes then return.
-  const user = await findUserByEmail(email);
+  const user = await findUserByEmail(userData.email);
   if(user) {
     return res.status(400).json({"msg" : "User already exists,Please login!"})
   }
+
   // 4. Hash the password
+  userData.password = await generateHashedPassword(userData.password);
+
   // 5. Store in db
+  await saveUser(userData);
+  
   // 6. Create JWT and send it back to user
   return res.json({"msg": "User saved successfully"})
 })

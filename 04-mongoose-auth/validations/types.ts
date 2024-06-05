@@ -12,7 +12,7 @@ export const signUpSchema = zod.object({
       }),
     name: zod.string(),
     age: zod.number().optional(),
-    mobilenumber: zod.string().refine((value) => {
+    mobileNumber: zod.string().refine((value) => {
         return allDigits.test(value) && value.length===10;
     }),
     dateOfBirth: zod.string().refine((value) => {
