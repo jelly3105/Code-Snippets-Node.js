@@ -1,12 +1,13 @@
 import zod from "zod";
+import { allDigits, dateFormatDDMMYYYY, digit, lowerCase, specialCharacters, upperCase } from "./regex";
 
 export const signUpSchema = zod.object({
     email: zod.string().email(),
     password: zod.string().min(8).max(16).refine((value) => {
-        const hasUpperCase = /[A-Z]/.test(value);
-        const hasLowerCase = /[a-z]/.test(value);
-        const hasDigit = /\d/.test(value);
-        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+        const hasUpperCase = upperCase.test(value);
+        const hasLowerCase = lowerCase.test(value);
+        const hasDigit = digit.test(value);
+        const hasSpecialChar = specialCharacters.test(value);
         return hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
       }, {
         message: "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
@@ -14,11 +15,11 @@ export const signUpSchema = zod.object({
     name: zod.string(),
     age: zod.number().optional(),
     mobilenumber: zod.string().refine((value) => {
-        return /^[0-9]+$/.test(value) && value.length===10;
+        return allDigits.test(value) && value.length===10;
     }),
     dateOfBirth: zod.string().refine((value) => {
         // Check if the format is correct using a regular expression dd-mm-yyyy.
-        const dateFormat = /^\d{2}-\d{2}-\d{4}$/.test(value);
+        const dateFormat = dateFormatDDMMYYYY.test(value);
         // parse the date
         const [day, month, year] = value.split("-").map(Number);
         // Check if the date is valid

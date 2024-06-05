@@ -1,5 +1,5 @@
 import express from "express";
-import { connectToDB } from "./connectToDB";
+import { connectToDB } from "./database/connectToDB";
 import { signUpSchema } from "./types";
 
 const app = express();
@@ -13,6 +13,7 @@ app.post("/signup", async (req,res) => {
     return res.status(400).json({"msg" : "Validation failed"})
   }
   // 3. Check if email or username exists, if yes then return.
+
   // 4. Hash the password
   // 5. Store in db
   // 6. Create JWT and send it back to user
